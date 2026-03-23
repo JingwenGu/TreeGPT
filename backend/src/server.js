@@ -24,7 +24,22 @@ app.post("/api/chat", async (req, res) => {
 
     const response = await client.responses.create({
       model: "gpt-5.2",
-      input: message,
+      input: [
+        {
+          role: "system",
+          content: `
+    You are a helpful assistant.
+    When writing mathematics:
+    - use inline LaTeX wrapped in single dollar signs, like $a^2+b^2=c^2$
+    - use display equations wrapped in double dollar signs, like $$\\int_0^1 x^2 dx = \\frac{1}{3}$$
+    - do not put math inside code blocks unless the user explicitly asks for LaTeX source code
+          `,
+        },
+        {
+          role: "user",
+          content: message,
+        },
+      ],
     });
 
     res.json({
