@@ -30,7 +30,8 @@ export default function App() {
       content: trimmed,
     }
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput("");
     setLoading(true);
     setError("");
@@ -42,7 +43,7 @@ export default function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: trimmed,
+          messages: updatedMessages,
         }),
       });
 
@@ -124,7 +125,7 @@ export default function App() {
           left: "50%",
           bottom: 0,
           transform: "translateX(-50%)",
-          width: "min(2000px, calc(70%-48px))",
+          width: "70%",
           background: "#ffffff",
           paddingTop: 8,
         }}

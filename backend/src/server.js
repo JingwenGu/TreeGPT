@@ -16,9 +16,11 @@ app.get("/api/hello", (req, res) => {
 
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message } = req.body;
+    const { messages } = req.body;
 
-    if (!message || typeof message !== "string") {
+    console.log("messages", messages);
+
+    if (!Array.isArray(messages)) {
       return res.status(400).json({ error: "Missing or invalid 'message'." });
     }
 
@@ -35,10 +37,7 @@ app.post("/api/chat", async (req, res) => {
     - do not put math inside code blocks unless the user explicitly asks for LaTeX source code
           `,
         },
-        {
-          role: "user",
-          content: message,
-        },
+        ...messages,
       ],
     });
 
